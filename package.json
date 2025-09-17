@@ -1,0 +1,33 @@
+{
+  "name": "@currentjs/templating",
+  "version": "0.1.0",
+  "description": "A lightweight, server-side templating engine for Node.js applications with support for layouts, partials, and basic logic expressions",
+  "license": "LGPL-3.0", 
+  "author": "Konstantin Zavalny",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/currentjs/templating.git"
+  },
+  "homepage": "https://github.com/currentjs/templating",
+  "bugs": "https://github.com/currentjs/templating/issues",
+  "keywords": ["currentjs", "templating", "ssr", "rendering", "mustache", "html", "template engine"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "typescript": "^5.6.3"
+  }
+}
+
