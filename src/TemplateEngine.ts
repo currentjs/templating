@@ -253,12 +253,28 @@ export class TemplateEngine {
   }
 
   private interpolate(html: string, data: any): string {
-    const mustacheRegex = /\{\{\s*([^}]+?)\s*\}\}/g;
-    return html.replace(mustacheRegex, (_full, expr: string) => {
+    // First pass: raw (unescaped) triple-brace expressions {{{ expr }}}
+    html = html.replace(/\{\{\{\s*([^}]+?)\s*\}\}\}/g, (_full, expr: string) => {
       const value = this.safeEval(expr, data);
       if (value === null || value === undefined) return '';
       return String(value);
     });
+    // Second pass: escaped double-brace expressions {{ expr }}
+    const mustacheRegex = /\{\{\s*([^}]+?)\s*\}\}/g;
+    return html.replace(mustacheRegex, (_full, expr: string) => {
+      const value = this.safeEval(expr, data);
+      if (value === null || value === undefined) return '';
+      return this.escapeHtml(String(value));
+    });
+  }
+
+  private escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   private parseAttributes(attrs: string, data: any): Record<string, unknown> {

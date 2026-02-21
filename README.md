@@ -30,6 +30,8 @@ In all seriousness, this templating engine shines when you need:
 <p>You are {{ age }} years old.</p>
 ```
 
+Values are **HTML-escaped** by default (`&`, `"`, `'`, `<`, `>` → entities). Use triple braces `{{{ }}}` for raw (unescaped) output—e.g. when injecting pre-rendered HTML like layout content.
+
 ### 🔄 Loops with x-for
 ```html
 <ul x-for="items" x-row="item">
@@ -113,7 +115,7 @@ const app = createWebServer({ controllers, webDir }, {
 </head>
 <body>
   <div class="container-fluid">
-    <div id="main">{{ content }}</div>
+    <div id="main">{{{ content }}}</div>
   </div>
 </body>
 </html>
@@ -225,6 +227,9 @@ If no directive is found, the filename (without extension) is used.
 {{ $index }}              <!-- Current loop index (inside x-for) -->
 ```
 
+- **`{{ }}`** — Escaped output: characters `&`, `"`, `'`, `<`, `>` are converted to HTML entities. Use for text and attribute values to prevent broken markup and XSS when data contains quotes (e.g. JSON strings).
+- **`{{{ }}}`** — Raw (unescaped) output: use only for trusted HTML you intend to inject as markup (e.g. `{{{ content }}}` in layouts for pre-rendered inner templates).
+
 #### Loops
 ```html
 <div x-for="arrayVariable" x-row="itemName">
@@ -264,6 +269,8 @@ If no directive is found, the filename (without extension) is used.
 ## Security Considerations
 
 ⚠️ **Important**: This templating engine uses `eval()` for expression evaluation (wrapped in a `Function` constructor with a limited scope). While it's sandboxed to some degree, **never use untrusted user input directly in templates**. This is designed for server-side templates with controlled data, not for rendering user-generated content.
+
+By default, `{{ }}` interpolations are HTML-escaped, which helps prevent broken attributes and XSS when values contain quotes or special characters. Use `{{{ }}}` only for trusted pre-rendered HTML (e.g. layout content).
 
 ## Performance Notes
 
