@@ -1,6 +1,6 @@
 {
   "name": "@currentjs/templating",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A lightweight, server-side templating engine for Node.js applications with support for layouts, partials, and basic logic expressions",
   "license": "LGPL-3.0",
   "author": "Konstantin Zavalny",
