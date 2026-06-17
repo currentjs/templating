@@ -354,7 +354,7 @@ return this.render('catDetail', cat, 'main_view');
 
 ```bash
 # Generate your app - templating is included automatically
-currentjs create app my-app
+currentjs init
 # Start creating templates in src/modules/YourModule/views/
 ```
 (for more details see the [documentation](https://github.com/currentjs/gen))

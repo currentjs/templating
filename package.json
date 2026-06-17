@@ -27,8 +27,11 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist",
-    "prepack": "npm run build"
+    "clean": "rm -rf dist dist-test",
+    "prepack": "npm run build",
+    "test:build": "tsc -p tsconfig.test.json",
+    "test": "npm run test:build && node --test dist-test/tests/unit/*.test.js",
+    "test:all": "npm run test:build && node --test dist-test/tests/unit/*.test.js dist-test/tests/integration/*.test.js"
   },
   "engines": {
     "node": ">=18"
